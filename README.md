@@ -63,12 +63,13 @@ Standardize field values in records:
 * Removes all non numeric digits from the **phone_number** field
 * Removes all non valid digits from the Spanish **id_number** field
 
-## How to install this script from the source code
+## Install from the source code
 
 This script was developed in **[Go](https://golang.org/)**.
 
 To download and install **eclean** and it's dependencies you must have **Go** installed and run in the command line:
 
 ```
+go get github.com/greenpeace/eclean
 go install github.com/greenpeace/eclean
 ```
