@@ -24,6 +24,10 @@ Options you can add:
 
 -delete - Creates files with email addresses only and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.  
 
+OTHER:
+
+
+-trash - Delete all files created by eclean in the current folder.
 
 `
 

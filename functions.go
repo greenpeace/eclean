@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/osvik/simplecsv"
 )
@@ -163,4 +164,11 @@ func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		fmt.Println("There's not a first_name and last_name fields in the csv")
 	}
 
+}
+
+// Removes all the result files
+func trashFiles() {
+	os.Remove("eclean_INVALID_EMAILS.csv")
+	os.Remove("eclean_FAKE_NAMES.csv")
+	os.Remove("eclean_EMPTY_NAMES.csv")
 }
