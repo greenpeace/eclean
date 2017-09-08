@@ -46,6 +46,10 @@ In Windows:
 
 `-delete` - Creates files with email addresses **only** and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.   
 
+### Other 
+
+`./eclean -trash` - Delete all files created by eclean in the current folder.
+
 ### 3 - Results
 
 The script will generate csv files on the current folder with filenames prefixed by `eclean_`. 
