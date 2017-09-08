@@ -59,7 +59,6 @@ Features to develop in the near future.
 Records that can be removed:
 
 * Create a list of **suppressed** email addresses (be careful not to add them to EN again)
-* Create a list of **empty** first names and last names
 
 Standardize field values in records:
 
