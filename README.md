@@ -24,13 +24,13 @@ The following example will check invalid emails and some issues with names in th
 In Mac OS / Linux:
 
 ```
-./eclean -input=your_EN_file_to_check.csv -emails -fake
+./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -delete
 ```
 
 In Windows: 
 
 ```
-./eclean.exe -input=your_EN_file_to_check.csv -emails -fake
+./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -delete
 ```
 
 ### List of checks you can do
@@ -48,6 +48,8 @@ In Windows:
 
 ### Other 
 
+`./eclean -help` - Display help.
+
 `./eclean -trash` - Delete all files created by eclean in the current folder.
 
 ### 3 - Results
@@ -62,7 +64,7 @@ Features to develop in the near future.
 
 Records that can be removed:
 
-* Create a list of **suppressed** email addresses (be careful not to add them to EN again)
+* Create lists of **suppressed** email addresses (be careful not to add them to EN again)
 
 Standardize field values in records:
 

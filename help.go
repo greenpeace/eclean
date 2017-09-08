@@ -8,11 +8,11 @@ func displayHelp() {
 	helpText := `
 Eclean identifies records you should delete or fix. This script does not change the original file, it parses an Engaging Networks csv and creates other csvs with the results.
 
-Example:
+EXAMPLE:
 
-./eclean -input=your_EN_file_to_check.csv -emails -fake -delete
+./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -delete
 
-List of checks you can do:
+LIST OF CHECKS YOU CAN DO:
 
 -emails - Creates a file with records that don't respect the email regular expression. This emails can be fixed or deleted. Saved in eclean_INVALID_EMAILS.csv
 
@@ -20,14 +20,16 @@ List of checks you can do:
 
 -empty - Creates a csv with empty first names and last names. This whould be inspected and can be deleted if there's not the risk of being added again by the CRM. Saved in eclean_EMPTY_NAMES.csv
 
-Options you can add:
+OPTIONS YOU CAN ADD:
 
 -delete - Creates files with email addresses only and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.  
 
 OTHER:
 
+-help - Display help.
 
 -trash - Delete all files created by eclean in the current folder.
+
 
 `
 
