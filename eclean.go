@@ -10,6 +10,7 @@ const emailRegex string = `([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]
 func main() {
 
 	help := flag.Bool("help", false, "Display help")
+	trash := flag.Bool("trash", false, "Delete files")
 	fileName := flag.String("input", "your_EN_file_to_check.csv", "File to do the operations")
 	emails := flag.Bool("emails", false, "Check for invalid email addresses")
 	fake := flag.Bool("fake", false, "Check for records that might be fake")
@@ -19,6 +20,8 @@ func main() {
 
 	if *help == true {
 		displayHelp()
+	} else if *trash == true {
+		trashFiles()
 	} else {
 
 		fmt.Printf("\nREPORT\n\n")
