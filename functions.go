@@ -163,5 +163,4 @@ func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		fmt.Println("There's not a first_name and last_name fields in the csv")
 	}
 
-	fmt.Println(fieldsList)
 }
