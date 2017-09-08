@@ -39,6 +39,9 @@ In Windows:
 
 `-fake` - Creates a file with records with weird first and last names. You should inspect them and delete them as they are not real users. Saved in `eclean_FAKE_NAMES.csv`
 
+`-empty` - Creates a csv with empty first names and last names. This whould be inspected and can be deleted if there's not the risk of being added again by the CRM. Saved in `eclean_EMPTY_NAMES.csv`
+
+
 ### Options you can add
 
 `-delete` - Creates files with email addresses **only** and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.   

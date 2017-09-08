@@ -13,6 +13,7 @@ func main() {
 	fileName := flag.String("input", "your_EN_file_to_check.csv", "File to do the operations")
 	emails := flag.Bool("emails", false, "Check for invalid email addresses")
 	fake := flag.Bool("fake", false, "Check for records that might be fake")
+	empty := flag.Bool("empty", false, "Check for records that have empty first and last names")
 	deleteIt := flag.Bool("delete", false, "Return the emails only, without header ")
 	flag.Parse()
 
@@ -47,5 +48,11 @@ func main() {
 			fakeNames(x, deleteIt)
 			fmt.Printf("\n")
 		}
+
+		if *empty == true {
+			emptyNames(x, deleteIt)
+			fmt.Printf("\n")
+		}
+
 	}
 }

@@ -127,3 +127,41 @@ func fakeNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	}
 
 }
+
+// Creates a Csv with empty names
+func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	var fieldsList []string
+	if *deleteFormat == false {
+		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name"}
+	} else {
+		fieldsList = []string{"email"}
+	}
+
+	if x.GetHeaderPosition("first_name") != -1 && x.GetHeaderPosition("last_name") != -1 {
+		fmt.Println("first_name and last_name fields found")
+		invalidFirstNameIndex, invalidFirstNameIndexOK := x.FindInField("first_name", "")
+		invalidLastNameIndex, invalidLastNameIndexOK := x.FindInField("last_name", "")
+		if invalidFirstNameIndexOK == true || invalidLastNameIndexOK == true {
+			invalidNamesIndex := simplecsv.AndIndex(invalidFirstNameIndex, invalidLastNameIndex)
+			fmt.Println("Number of records with empty names:", len(invalidNamesIndex))
+			invalidNamesCsv, _ := x.OnlyThisRows(invalidNamesIndex, true)
+			invalidNamesCsv, _ = invalidNamesCsv.OnlyThisFields(fieldsList)
+			if *deleteFormat == true {
+				invalidNamesCsv, _ = invalidNamesCsv.DeleteRow(0)
+			}
+			wasWritten := invalidNamesCsv.WriteCsvFile("eclean_EMPTY_NAMES.csv")
+			if wasWritten == true {
+				fmt.Println("Fake names saved in the file: eclean_EMPTY_NAMES.csv")
+			} else {
+				fmt.Println("Could not create eclean_EMPTY_NAMES.csv")
+			}
+		} else {
+			fmt.Println("Problems with fake names index")
+		}
+
+	} else {
+		fmt.Println("There's not a first_name and last_name fields in the csv")
+	}
+
+	fmt.Println(fieldsList)
+}
