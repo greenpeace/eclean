@@ -127,3 +127,25 @@ func fakeNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	}
 
 }
+
+// Creates a Csv with empty names
+func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	var fieldsList []string
+	if *deleteFormat == false {
+		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name"}
+	} else {
+		fieldsList = []string{"email"}
+	}
+
+	if x.GetHeaderPosition("first_name") != -1 && x.GetHeaderPosition("last_name") != -1 {
+		fmt.Println("first_name and last_name fields found")
+		invalidFirstNameIndex, invalidFirstNameIndexOK := x.FindInField("first_name", "")
+		invalidLastNameIndex, invalidLastNameIndexOK := x.FindInField("last_name", "")
+		if invalidFirstNameIndexOK == true || invalidLastNameIndexOK == true {
+			invalidNamesIndex := simplecsv.AndIndex(invalidFirstNameIndex, invalidLastNameIndex)
+			fmt.Println("Number of records with empty names:", len(invalidNamesIndex))
+		}
+	}
+
+	fmt.Println(fieldsList)
+}
