@@ -144,7 +144,23 @@ func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		if invalidFirstNameIndexOK == true || invalidLastNameIndexOK == true {
 			invalidNamesIndex := simplecsv.AndIndex(invalidFirstNameIndex, invalidLastNameIndex)
 			fmt.Println("Number of records with empty names:", len(invalidNamesIndex))
+			invalidNamesCsv, _ := x.OnlyThisRows(invalidNamesIndex, true)
+			invalidNamesCsv, _ = invalidNamesCsv.OnlyThisFields(fieldsList)
+			if *deleteFormat == true {
+				invalidNamesCsv, _ = invalidNamesCsv.DeleteRow(0)
+			}
+			wasWritten := invalidNamesCsv.WriteCsvFile("eclean_EMPTY_NAMES.csv")
+			if wasWritten == true {
+				fmt.Println("Fake names saved in the file: eclean_EMPTY_NAMES.csv")
+			} else {
+				fmt.Println("Could not create eclean_EMPTY_NAMES.csv")
+			}
+		} else {
+			fmt.Println("Problems with fake names index")
 		}
+
+	} else {
+		fmt.Println("There's not a first_name and last_name fields in the csv")
 	}
 
 	fmt.Println(fieldsList)
