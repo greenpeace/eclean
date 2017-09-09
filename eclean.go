@@ -15,6 +15,7 @@ func main() {
 	emails := flag.Bool("emails", false, "Check for invalid email addresses")
 	fake := flag.Bool("fake", false, "Check for records that might be fake")
 	empty := flag.Bool("empty", false, "Check for records that have empty first and last names")
+	suppressed := flag.Bool("suppressed", false, "Check for records that have suppressed emails")
 	deleteIt := flag.Bool("delete", false, "Return the emails only, without header ")
 	flag.Parse()
 
@@ -54,6 +55,11 @@ func main() {
 
 		if *empty == true {
 			emptyNames(x, deleteIt)
+			fmt.Printf("\n")
+		}
+
+		if *suppressed == true {
+			suppresedEmails(x, deleteIt)
 			fmt.Printf("\n")
 		}
 
