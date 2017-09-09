@@ -73,7 +73,7 @@ Features to develop in the near future.
 
 Records that can be removed:
 
-* Differentiate **suppressed** donors from other suppressed emails.
+* Create a suppressed file for non-contacts.
 
 Standardise field values in records:
 
