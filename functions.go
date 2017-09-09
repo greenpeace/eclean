@@ -209,10 +209,27 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 
 	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition("contact_codes") != -1 {
 		fmt.Println("contact_codes field found")
-		donnorsIndex, donnorsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
-		if donnorsIndexOK == true && suppressedEmailIndexOK == true {
-			suppressedEmailsDonnorsIndex := simplecsv.AndIndex(donnorsIndex, suppressedEmailIndex)
-			fmt.Println("Number of donnors and ex-donnors with suppressed emails:", len(suppressedEmailsDonnorsIndex))
+		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		if contactsIndexOK == true && suppressedEmailIndexOK == true {
+			suppressedEmailsContactsIndex := simplecsv.AndIndex(contactsIndex, suppressedEmailIndex)
+			fmt.Println("Number of SF contacts with suppressed emails:", len(suppressedEmailsContactsIndex))
+			if *deleteFormat == false {
+				fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name", "contact_codes"}
+			} else {
+				fieldsList = []string{"email"}
+			}
+			suppressedContactsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.OnlyThisRows(suppressedEmailsContactsIndex, true)
+			if *deleteFormat == true {
+				suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.DeleteRow(0)
+			}
+			wasWritten := suppressedContactsEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			if wasWritten == true {
+				fmt.Println("Suppressed emails from contacts saved in the file: eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			} else {
+				fmt.Println("Could not create eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			}
+
 		}
 	}
 
