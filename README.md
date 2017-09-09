@@ -24,13 +24,13 @@ The following example will check invalid emails and some issues with names in th
 In Mac OS / Linux:
 
 ```
-./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -delete
+./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
 ```
 
 In Windows: 
 
 ```
-./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -delete
+./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
 ```
 
 ### List of checks you can do
@@ -41,6 +41,7 @@ In Windows:
 
 `-empty` - Creates a csv with empty first names and last names. This whould be inspected and can be deleted if there's not the risk of being added again by the CRM. Saved in `eclean_EMPTY_NAMES.csv`
 
+`-suppressed` - Creates a csv file with suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`
 
 ### Options you can add
 
