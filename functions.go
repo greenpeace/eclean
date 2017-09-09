@@ -54,6 +54,11 @@ func checkRecommendedFields(x simplecsv.SimpleCsv) {
 	} else {
 		fmt.Println("OK - Suppressed field found")
 	}
+	if x.GetHeaderPosition("contact_codes") == -1 {
+		fmt.Println("ERR - There's not a contact_codes field in the CSV")
+	} else {
+		fmt.Println("OK - contact_codes field found")
+	}
 }
 
 // Creates a Csv with invalid email addresses
