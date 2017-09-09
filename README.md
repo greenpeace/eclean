@@ -13,7 +13,9 @@
 First export a user data or hybrid csv with all your users and **at least** this fields:
 * email
 * first_name
-* last_name 
+* last_name
+* Suppressed
+* contact_codes (sync with Salesforce)
 
 ### 2 - Run the script
 
@@ -41,7 +43,7 @@ In Windows:
 
 `-empty` - Creates a csv file with empty first names and last names. Storing email addresses without first and last names is not recommended. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_EMPTY_NAMES.csv`
 
-`-suppressed` - Creates a csv file with suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`
+`-suppressed` - Creates a csv file with all the suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`. IMPORTANT: If a `contact_codes` field exists in the exported csv, a second file `eclean_SUPPRESSED_EMAILS_CONTACT.csv` is also created. This second file contains all the records with a contact code.
 
 ### Options you can add
 

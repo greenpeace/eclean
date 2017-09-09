@@ -54,6 +54,11 @@ func checkRecommendedFields(x simplecsv.SimpleCsv) {
 	} else {
 		fmt.Println("OK - Suppressed field found")
 	}
+	if x.GetHeaderPosition("contact_codes") == -1 {
+		fmt.Println("ERR - There's not a contact_codes field in the CSV")
+	} else {
+		fmt.Println("OK - contact_codes field found")
+	}
 }
 
 // Creates a Csv with invalid email addresses
@@ -172,10 +177,13 @@ func trashFiles() {
 	os.Remove("eclean_FAKE_NAMES.csv")
 	os.Remove("eclean_EMPTY_NAMES.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
+	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 }
 
 // Creates a csv with the supressed emails
 func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	var suppressedEmailIndex []int
+	var suppressedEmailIndexOK bool
 	var fieldsList []string
 	if *deleteFormat == false {
 		fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name"}
@@ -184,7 +192,7 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	}
 	if x.GetHeaderPosition("Suppressed") != -1 {
 		fmt.Println("Suppressed field found")
-		suppressedEmailIndex, suppressedEmailIndexOK := x.FindInField("Suppressed", "Y")
+		suppressedEmailIndex, suppressedEmailIndexOK = x.FindInField("Suppressed", "Y")
 		if suppressedEmailIndexOK == true {
 			fmt.Println("Number of records with suppressed emails:", len(suppressedEmailIndex))
 			suppressedEmailsCsv, _ := x.OnlyThisFields(fieldsList)
@@ -201,9 +209,34 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		} else {
 			fmt.Println("Problems with supressed index")
 		}
-
 	} else {
 		fmt.Println("There's not a Suppressed field in the csv")
+	}
+
+	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition("contact_codes") != -1 {
+		fmt.Println("contact_codes field found")
+		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		if contactsIndexOK == true && suppressedEmailIndexOK == true {
+			suppressedEmailsContactsIndex := simplecsv.AndIndex(contactsIndex, suppressedEmailIndex)
+			fmt.Println("Number of SF contacts with suppressed emails:", len(suppressedEmailsContactsIndex))
+			if *deleteFormat == false {
+				fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name", "contact_codes"}
+			} else {
+				fieldsList = []string{"email"}
+			}
+			suppressedContactsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.OnlyThisRows(suppressedEmailsContactsIndex, true)
+			if *deleteFormat == true {
+				suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.DeleteRow(0)
+			}
+			wasWritten := suppressedContactsEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			if wasWritten == true {
+				fmt.Println("Suppressed emails from contacts saved in the file: eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			} else {
+				fmt.Println("Could not create eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			}
+
+		}
 	}
 
 }
