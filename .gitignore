@@ -2,3 +2,5 @@ eclean
 eclean_INVALID_EMAILS.csv
 eclean_FAKE_NAMES.csv
 eclean_EMPTY_NAMES.csv
+eclean_SUPPRESSED_EMAILS.csv
+eclean_SUPPRESSED_EMAILS_CONTACTS.csv
