@@ -57,7 +57,9 @@ In Windows:
 
 ### 3 - Results
 
-The script will generate csv files on the current folder with filenames prefixed by `eclean_`. 
+**VERY IMPORTANT!!!** - **Think** carefully on the implications of deleting information from EN. **Consult** with your colleagues in your office and the community. Always keep at least one **backup** and triple-check everything. Deleting email addresses will affect your number of signups.
+
+This script will generate csv files on the current folder with filenames prefixed by `eclean_`. 
 
 Inspect this files and, if all is OK, add `-delete` to your command to obtain files with the email addresses only (one per line). To delete the records upload its email addresses in *Supporter Data &gt; Delete Supporters*.
 
@@ -69,7 +71,7 @@ Records that can be removed:
 
 * Differentiate **suppressed** donors from other suppressed emails.
 
-Standardize field values in records:
+Standardise field values in records:
 
 * Removes all non numeric digits from the **phone_number** field
 * Removes all non valid digits from the Spanish **id_number** field
