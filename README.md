@@ -65,7 +65,7 @@ Features to develop in the near future.
 
 Records that can be removed:
 
-* Create lists of **suppressed** email addresses (be careful not to add them to EN again)
+* Differentiate **suppressed** donors from other suppressed emails.
 
 Standardize field values in records:
 
