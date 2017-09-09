@@ -176,6 +176,8 @@ func trashFiles() {
 
 // Creates a csv with the supressed emails
 func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	var suppressedEmailIndex []int
+	var suppressedEmailIndexOK bool
 	var fieldsList []string
 	if *deleteFormat == false {
 		fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name"}
@@ -184,7 +186,7 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	}
 	if x.GetHeaderPosition("Suppressed") != -1 {
 		fmt.Println("Suppressed field found")
-		suppressedEmailIndex, suppressedEmailIndexOK := x.FindInField("Suppressed", "Y")
+		suppressedEmailIndex, suppressedEmailIndexOK = x.FindInField("Suppressed", "Y")
 		if suppressedEmailIndexOK == true {
 			fmt.Println("Number of records with suppressed emails:", len(suppressedEmailIndex))
 			suppressedEmailsCsv, _ := x.OnlyThisFields(fieldsList)
@@ -201,9 +203,17 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		} else {
 			fmt.Println("Problems with supressed index")
 		}
-
 	} else {
 		fmt.Println("There's not a Suppressed field in the csv")
+	}
+
+	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition("contact_codes") != -1 {
+		fmt.Println("contact_codes field found")
+		donnorsIndex, donnorsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		if donnorsIndexOK == true && suppressedEmailIndexOK == true {
+			suppressedEmailsDonnorsIndex := simplecsv.AndIndex(donnorsIndex, suppressedEmailIndex)
+			fmt.Println("Number of donnors and ex-donnors with suppressed emails:", len(suppressedEmailsDonnorsIndex))
+		}
 	}
 
 }
