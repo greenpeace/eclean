@@ -1,5 +1,9 @@
 **Eclean identifies records you should delete or fix. This script does not change the original file, it parses an Engaging Networks csv and creates other csvs with the results.**
 
+This script is **fast**. It processes 4 queries over 1,300,000 records in about 11 seconds (in a laptop computer). Optionally it formats the files with one email address per line, ready to delete. 
+
+How long will you take to do it using the classic process? Do the 4 queries, download the results in 4 separate csv files and remove the extra columns in each file? 
+
 ## How to install
 
 * Download the .zip file for your operating system and unzip the executable binary file.
