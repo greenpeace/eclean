@@ -171,6 +171,7 @@ func trashFiles() {
 	os.Remove("eclean_INVALID_EMAILS.csv")
 	os.Remove("eclean_FAKE_NAMES.csv")
 	os.Remove("eclean_EMPTY_NAMES.csv")
+	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 }
 
 // Creates a csv with the supressed emails
