@@ -18,7 +18,7 @@ LIST OF CHECKS YOU CAN DO:
 
 -fake - Creates a file with records with weird first and last names. You should inspect them and delete them as they are not real users. Saved in eclean_FAKE_NAMES.csv
 
--empty - Creates a csv with empty first names and last names. This whould be inspected and can be deleted if there's not the risk of being added again by the CRM. Saved in eclean_EMPTY_NAMES.csv
+-empty - Creates a csv with empty first names and last names. Storing email addresses without first and last names is not recommended. This should be inspected and can be deleted if there's not the risk of being added again by the CRM. Saved in eclean_EMPTY_NAMES.csv
 
 -suppressed - Creates a csv file with suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in eclean_SUPPRESSED_EMAILS.csv
 
