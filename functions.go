@@ -186,6 +186,17 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		suppressedEmailIndex, suppressedEmailIndexOK := x.FindInField("Suppressed", "Y")
 		if suppressedEmailIndexOK == true {
 			fmt.Println("Number of records with suppressed emails:", len(suppressedEmailIndex))
+			suppressedEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			suppressedEmailsCsv, _ = suppressedEmailsCsv.OnlyThisRows(suppressedEmailIndex, true)
+			if *deleteFormat == true {
+				suppressedEmailsCsv, _ = suppressedEmailsCsv.DeleteRow(0)
+			}
+			wasWritten := suppressedEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS.csv")
+			if wasWritten == true {
+				fmt.Println("Suppressed emails saved in the file: eclean_SUPPRESSED_EMAILS.csv")
+			} else {
+				fmt.Println("Could not create eclean_SUPPRESSED_EMAILS.csv")
+			}
 		} else {
 			fmt.Println("Problems with supressed index")
 		}
@@ -194,5 +205,4 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		fmt.Println("There's not a Suppressed field in the csv")
 	}
 
-	fmt.Println(fieldsList)
 }
