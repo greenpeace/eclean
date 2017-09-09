@@ -172,3 +172,27 @@ func trashFiles() {
 	os.Remove("eclean_FAKE_NAMES.csv")
 	os.Remove("eclean_EMPTY_NAMES.csv")
 }
+
+// Creates a csv with the supressed emails
+func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	var fieldsList []string
+	if *deleteFormat == false {
+		fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name"}
+	} else {
+		fieldsList = []string{"email"}
+	}
+	if x.GetHeaderPosition("Suppressed") != -1 {
+		fmt.Println("Suppressed field found")
+		suppressedEmailIndex, suppressedEmailIndexOK := x.FindInField("Suppressed", "Y")
+		if suppressedEmailIndexOK == true {
+			fmt.Println("Number of records with suppressed emails:", len(suppressedEmailIndex))
+		} else {
+			fmt.Println("Problems with supressed index")
+		}
+
+	} else {
+		fmt.Println("There's not a Suppressed field in the csv")
+	}
+
+	fmt.Println(fieldsList)
+}
