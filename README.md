@@ -47,7 +47,7 @@ In Windows:
 
 `-empty` - Creates a csv file with empty first names and last names. Storing email addresses without first and last names is not recommended. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_EMPTY_NAMES.csv`
 
-`-suppressed` - Creates a csv file with all the suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`. IMPORTANT: If a `contact_codes` field exists in the exported csv, a second file `eclean_SUPPRESSED_EMAILS_CONTACT.csv` is also created. This second file contains all the records with a contact code.
+`-suppressed` - Creates a csv file with all the suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`. IMPORTANT: If the `contact_codes` field exists in the exported csv, a second and third files `eclean_SUPPRESSED_EMAILS_CONTACTS.csv` and `eclean_SUPPRESSED_EMAILS_LEADS.csv` are also created.
 
 ### Options you can add
 
@@ -70,10 +70,6 @@ Inspect this files and, if all is OK, add `-delete` to your command to obtain fi
 ## To do
 
 Features to develop in the near future.
-
-Records that can be removed:
-
-* Create a suppressed file for non-contacts.
 
 Standardise field values in records:
 
