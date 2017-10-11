@@ -178,6 +178,7 @@ func trashFiles() {
 	os.Remove("eclean_EMPTY_NAMES.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+	os.Remove("eclean_SUPPRESSED_EMAILS_LEADS.csv")
 }
 
 // Creates a csv with the supressed emails
@@ -215,25 +216,45 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 
 	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition("contact_codes") != -1 {
 		fmt.Println("contact_codes field found")
+
+		lastRecord := x.GetNumberRows() - 1
 		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		leadsIndex := simplecsv.NotIndex(contactsIndex, 1, lastRecord)
+
 		if contactsIndexOK == true && suppressedEmailIndexOK == true {
 			suppressedEmailsContactsIndex := simplecsv.AndIndex(contactsIndex, suppressedEmailIndex)
+			suppressedEmailsLeadsIndex := simplecsv.AndIndex(leadsIndex, suppressedEmailIndex)
+
 			fmt.Println("Number of SF contacts with suppressed emails:", len(suppressedEmailsContactsIndex))
+			fmt.Println("Number of SF leads with suppressed emails:", len(suppressedEmailsLeadsIndex))
+
 			if *deleteFormat == false {
 				fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name", "contact_codes"}
 			} else {
 				fieldsList = []string{"email"}
 			}
 			suppressedContactsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			suppressedLeadsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+
 			suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.OnlyThisRows(suppressedEmailsContactsIndex, true)
+			suppressedLeadsEmailsCsv, _ = suppressedLeadsEmailsCsv.OnlyThisRows(suppressedEmailsLeadsIndex, true)
+
 			if *deleteFormat == true {
 				suppressedContactsEmailsCsv, _ = suppressedContactsEmailsCsv.DeleteRow(0)
+				suppressedLeadsEmailsCsv, _ = suppressedLeadsEmailsCsv.DeleteRow(0)
 			}
-			wasWritten := suppressedContactsEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
-			if wasWritten == true {
+			wasWrittenContacts := suppressedContactsEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			if wasWrittenContacts == true {
 				fmt.Println("Suppressed emails from contacts saved in the file: eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 			} else {
 				fmt.Println("Could not create eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
+			}
+
+			wasWrittenLeads := suppressedLeadsEmailsCsv.WriteCsvFile("eclean_SUPPRESSED_EMAILS_LEADS.csv")
+			if wasWrittenLeads == true {
+				fmt.Println("Suppressed emails from leads saved in the file: eclean_SUPPRESSED_EMAILS_LEADS.csv")
+			} else {
+				fmt.Println("Could not create eclean_SUPPRESSED_EMAILS_LEADS.csv")
 			}
 
 		}
