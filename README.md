@@ -1,20 +1,22 @@
+# Eclean
+
 **Eclean identifies records you should delete or fix. This script does not change the original file, it parses an Engaging Networks csv and creates other csvs with the results.**
 
 This script is **fast**. It processes 4 queries over 1,300,000 records in about 11 seconds (in a laptop computer). Optionally it formats the files with one email address per line, ready to delete. 
 
-How long will you take to do it using the classic process? Do the 4 queries, download the results in 4 separate csv files and remove the extra columns in each file? 
+How long will you take to do it using the classic process? Do the 4 queries, download the results in 4 separate csv files and remove the extra columns in each file?
 
 ## How to install
 
 * Download the [.zip file](https://github.com/greenpeace/eclean/releases) for your operating system and unzip the executable binary file.
 * Optionally copy the file to a folder in your command line PATH. You will be able to use the script in any folder.
 
-
 ## How to use
 
 ### 1 - Export your users
 
 First export a user data or hybrid csv with all your users and **at least** this fields:
+
 * email
 * first_name
 * last_name
@@ -29,13 +31,13 @@ The following example will check invalid emails and some issues with names in th
 
 In Mac OS / Linux:
 
-```
+```bash
 ./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
 ```
 
-In Windows: 
+In Windows:
 
-```
+```bash
 ./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
 ```
 
@@ -51,9 +53,9 @@ In Windows:
 
 ### Options you can add
 
-`-delete` - Creates files with email addresses **only** and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.   
+`-delete` - Creates files with email addresses **only** and without header. This simpler files can be uploaded in Engaging Networks if you want to delete the records.
 
-### Other 
+### Other
 
 `./eclean -help` - Display help.
 
@@ -82,7 +84,7 @@ This script was developed in **[Go](https://golang.org/)**.
 
 To download and install **eclean** and it's dependencies you must have **Go** installed and run in the command line:
 
-```
+```bash
 go get github.com/greenpeace/eclean
 go install github.com/greenpeace/eclean
 ```
