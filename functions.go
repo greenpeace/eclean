@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/osvik/simplecsv"
 )
@@ -183,6 +184,24 @@ func trashFiles() {
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_LEADS.csv")
+}
+
+// nowDateTimeString Returns the date as a string in a specific format
+func nowDateTimeString() string {
+	t := time.Now()
+	return t.Format("2006-01-02-15h04m05")
+}
+
+// stashFiles Renames files created by eclean by adding the date+time
+func stashFiles() {
+	now := nowDateTimeString()
+	os.Rename("eclean_INVALID_EMAILS.csv", "eclean_INVALID_EMAILS-"+now+".csv")
+	os.Rename("eclean_FAKE_NAMES.csv", "eclean_FAKE_NAMES-"+now+".csv")
+	os.Rename("eclean_EMPTY_NAMES.csv", "eclean_EMPTY_NAMES-"+now+".csv")
+	os.Rename("eclean_SUPPRESSED_EMAILS.csv", "eclean_SUPPRESSED_EMAILS-"+now+".csv")
+	os.Rename("eclean_SUPPRESSED_EMAILS_CONTACTS.csv", "eclean_SUPPRESSED_EMAILS_CONTACTS-"+now+".csv")
+	os.Rename("eclean_SUPPRESSED_EMAILS_LEADS.csv", "eclean_SUPPRESSED_EMAILS_LEADS-"+now+".csv")
+	os.Exit(0)
 }
 
 // Creates a csv with the supressed emails

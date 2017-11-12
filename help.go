@@ -32,6 +32,7 @@ OTHER:
 
 -trash - Delete all files created by eclean in the current folder.
 
+-stash - Renames all files created by eclean by adding a timestamp.
 
 `
 

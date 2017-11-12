@@ -59,7 +59,9 @@ In Windows:
 
 `./eclean -help` - Display help.
 
-`./eclean -trash` - Delete all files created by eclean in the current folder.
+`./eclean -stash` - Renames the last files created by eclean by adding a timestamp.
+
+`./eclean -trash` - Delete all files created by eclean in the current folder without a timestamp.
 
 ### 3 - Results
 
