@@ -8,7 +8,7 @@ How long will you take to do it using the classic process? Do the 4 queries, dow
 
 ## How to install
 
-* Download the [.zip file](https://github.com/greenpeace/eclean/releases) for your operating system and unzip the executable binary file.
+* Download the [.zip file](https://github.com/greenpeace/gpes-eclean/releases) for your operating system and unzip the executable binary file.
 * Optionally copy the file to a folder in your command line PATH. You will be able to use the script in any folder.
 
 ## How to use
@@ -87,6 +87,6 @@ This script was developed in **[Go](https://golang.org/)**.
 To download and install **eclean** and it's dependencies you must have **Go** installed and run in the command line:
 
 ```bash
-go get github.com/greenpeace/eclean
-go install github.com/greenpeace/eclean
+go get github.com/greenpeace/gpes-eclean
+go install github.com/greenpeace/gpes-eclean
 ```
