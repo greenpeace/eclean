@@ -11,6 +11,7 @@ func main() {
 
 	help := flag.Bool("help", false, "Display help")
 	trash := flag.Bool("trash", false, "Delete files")
+	stash := flag.Bool("stash", false, "Rename files created by this script")
 	fileName := flag.String("input", "your_EN_file_to_check.csv", "File to do the operations")
 	emails := flag.Bool("emails", false, "Check for invalid email addresses")
 	fake := flag.Bool("fake", false, "Check for records that might be fake")
@@ -21,6 +22,8 @@ func main() {
 
 	if *help == true {
 		displayHelp()
+	} else if *stash == true {
+		stashFiles()
 	} else if *trash == true {
 		trashFiles()
 	} else {
