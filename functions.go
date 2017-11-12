@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/osvik/simplecsv"
 )
@@ -183,6 +184,12 @@ func trashFiles() {
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_LEADS.csv")
+}
+
+// nowDateTimeString Returns the date as a string in a specific format
+func nowDateTimeString() string {
+	t := time.Now()
+	return t.Format("2006-01-02-15h04m05")
 }
 
 // Creates a csv with the supressed emails
