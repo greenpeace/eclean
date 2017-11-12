@@ -10,6 +10,10 @@ import (
 // Read the csv file
 func readCsvFile(fileName *string) simplecsv.SimpleCsv {
 	fmt.Println("Csv file name:", *fileName)
+	if _, err := os.Stat(*fileName); os.IsNotExist(err) {
+		fmt.Println("ERROR: The file/path", *fileName, "does not exist here")
+		os.Exit(-1)
+	}
 	var x simplecsv.SimpleCsv
 	var fileRead bool
 	x, fileRead = simplecsv.ReadCsvFile(*fileName)
