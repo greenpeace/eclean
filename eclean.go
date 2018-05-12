@@ -7,6 +7,8 @@ import (
 
 const emailRegex string = `([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)`
 
+const optOutFieldName = "real_email_ok"
+
 func main() {
 
 	help := flag.Bool("help", false, "Display help")
@@ -17,6 +19,7 @@ func main() {
 	fake := flag.Bool("fake", false, "Check for records that might be fake")
 	empty := flag.Bool("empty", false, "Check for records that have empty first and last names")
 	suppressed := flag.Bool("suppressed", false, "Check for records that have suppressed emails")
+	optOut := flag.Bool("optout", false, "Check for records that have opt outs emails")
 	deleteIt := flag.Bool("delete", false, "Return the emails only, without header ")
 	flag.Parse()
 
@@ -63,6 +66,10 @@ func main() {
 
 		if *suppressed == true {
 			suppresedEmails(x, deleteIt)
+			fmt.Printf("\n")
+		}
+		if *optOut == true {
+			optOutEmails(x, deleteIt)
 			fmt.Printf("\n")
 		}
 

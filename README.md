@@ -2,9 +2,9 @@
 
 **Eclean identifies records you should delete or fix. This script does not change the original file, it parses an Engaging Networks csv and creates other csvs with the results.**
 
-This script is **fast**. It processes 4 queries over 1,300,000 records in about 11 seconds (in a laptop computer). Optionally it formats the files with one email address per line, ready to delete. 
+This script is **fast**. It processes (all) 5 queries over 1,600,000 records in about 24 seconds (in a laptop computer). Optionally it formats the files with one email address per line, ready to delete. 
 
-How long will you take to do it using the classic process? Do the 4 queries, download the results in 4 separate csv files and remove the extra columns in each file?
+How long will you take to do it using the classic process? Do the 5 queries, download the results in 5 separate csv files and remove the extra columns in each file?
 
 ## How to install
 
@@ -23,6 +23,12 @@ First export a user data or hybrid csv with all your users and **at least** this
 * Suppressed
 * contact_codes (sync with Salesforce)
 
+If you are also cleaning opt-outs you have to include the field
+
+* real_email_ok
+
+in your CSV. Please note that if you use another field name you can compile eclean after changing the constant `optOutFieldName`
+
 ### 2 - Run the script
 
 Run the script from the command line with the desired checks as flags in the command. 
@@ -32,13 +38,13 @@ The following example will check invalid emails and some issues with names in th
 In Mac OS / Linux:
 
 ```bash
-./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
+./eclean -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -optout -delete
 ```
 
 In Windows:
 
 ```bash
-./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -delete
+./eclean.exe -input=your_EN_file_to_check.csv -emails -fake -empty -suppressed -optout -delete
 ```
 
 ### List of checks you can do
@@ -50,6 +56,8 @@ In Windows:
 `-empty` - Creates a csv file with empty first names and last names. Storing email addresses without first and last names is not recommended. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_EMPTY_NAMES.csv`
 
 `-suppressed` - Creates a csv file with all the suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`. IMPORTANT: If the `contact_codes` field exists in the exported csv, a second and third files `eclean_SUPPRESSED_EMAILS_CONTACTS.csv` and `eclean_SUPPRESSED_EMAILS_LEADS.csv` are also created.
+
+`-optout`- Creates a CSV file with all the opt-out email addresses. Just like the supressed emails this should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_OPT-OUT_EMAILS.csv`. If the `contact_codes` field exists in the exported csv, a second and third files `eclean_OPT-OUT_EMAILS_CONTACTS.csv` and `eclean_SUPPRESSED_OPT-OUT_LEADS.csv` are also created.
 
 ### Options you can add
 

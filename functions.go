@@ -59,6 +59,11 @@ func checkRecommendedFields(x simplecsv.SimpleCsv) {
 	} else {
 		fmt.Println("OK - Suppressed field found")
 	}
+	if x.GetHeaderPosition(optOutFieldName) == -1 {
+		fmt.Println("WARNING - There's not an opt-out field in the CSV. The CSV should have a column named", optOutFieldName)
+	} else {
+		fmt.Println("OK - Opt-out field found, it's the", optOutFieldName, "field")
+	}
 	if x.GetHeaderPosition("contact_codes") == -1 {
 		fmt.Println("ERR - There's not a contact_codes field in the CSV")
 	} else {
@@ -184,6 +189,9 @@ func trashFiles() {
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_LEADS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS_CONTACTS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS_LEADS.csv")
 }
 
 // nowDateTimeString Returns the date as a string in a specific format
@@ -201,6 +209,10 @@ func stashFiles() {
 	os.Rename("eclean_SUPPRESSED_EMAILS.csv", "eclean_SUPPRESSED_EMAILS-"+now+".csv")
 	os.Rename("eclean_SUPPRESSED_EMAILS_CONTACTS.csv", "eclean_SUPPRESSED_EMAILS_CONTACTS-"+now+".csv")
 	os.Rename("eclean_SUPPRESSED_EMAILS_LEADS.csv", "eclean_SUPPRESSED_EMAILS_LEADS-"+now+".csv")
+	os.Rename("eclean_OPT-OUT_EMAILS.csv", "eclean_OPT-OUT_EMAILS-"+now+".csv")
+	os.Rename("eclean_OPT-OUT_EMAILS_CONTACTS.csv", "eclean_OPT-OUT_EMAILS_CONTACTS-"+now+".csv")
+	os.Rename("eclean_OPT-OUT_EMAILS_LEADS.csv", "eclean_OPT-OUT_EMAILS_LEADS-"+now+".csv")
+
 	os.Exit(0)
 }
 
@@ -281,6 +293,94 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 			}
 
 		}
+	}
+
+}
+
+// Creates a csv with the opt-out emails
+func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
+	fmt.Println("Analising opt-out emails")
+	var optOutsEmailIndex []int
+	var optOutsEmailIndexOK bool
+	// Defining the fields in the col
+	var fieldsList []string
+	if *deleteFormat == false {
+		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name", optOutFieldName}
+	} else {
+		fieldsList = []string{"email"}
+	}
+
+	// It the opt out field exists
+	if x.GetHeaderPosition(optOutFieldName) != -1 {
+		fmt.Println("Opt-out field found, it's", optOutFieldName)
+		optOutsEmailIndex, optOutsEmailIndexOK = x.FindInField(optOutFieldName, "N")
+
+		if optOutsEmailIndexOK == true {
+			fmt.Println("Number of records with opt-outs emails:", len(optOutsEmailIndex))
+			optOutsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			optOutsEmailsCsv, _ = optOutsEmailsCsv.OnlyThisRows(optOutsEmailIndex, true)
+			if *deleteFormat == true {
+				optOutsEmailsCsv, _ = optOutsEmailsCsv.DeleteRow(0)
+			}
+			wasWritten := optOutsEmailsCsv.WriteCsvFile("eclean_OPT-OUT_EMAILS.csv")
+			if wasWritten == true {
+				fmt.Println("Opt-out emails saved in the file: eclean_OPT-OUT_EMAILS.csv")
+			} else {
+				fmt.Println("Could not create eclean_OPT-OUT_EMAILS.csv")
+			}
+		} else {
+			fmt.Println("Problems with opt-outs index")
+		}
+	} else { // If the opt-out field does not exist
+		fmt.Println("There's not an opt-out field in the csv. It should be", optOutFieldName)
+	}
+
+	// It the opt out and contact_codes fields exist
+	if x.GetHeaderPosition(optOutFieldName) != -1 && x.GetHeaderPosition("contact_codes") != -1 {
+		fmt.Println("contact_codes field found")
+
+		lastRecord := x.GetNumberRows() - 1
+		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		leadsIndex := simplecsv.NotIndex(contactsIndex, 1, lastRecord)
+
+		if contactsIndexOK == true && optOutsEmailIndexOK == true {
+			optOutsEmailsContactsIndex := simplecsv.AndIndex(contactsIndex, optOutsEmailIndex)
+			optOutsEmailsLeadsIndex := simplecsv.AndIndex(leadsIndex, optOutsEmailIndex)
+
+			fmt.Println("Number of SF contacts with opt-out emails:", len(optOutsEmailsContactsIndex))
+			fmt.Println("Number of SF leads with opt-out emails:", len(optOutsEmailsLeadsIndex))
+
+			if *deleteFormat == false {
+				fieldsList = []string{"Supporter ID", "email", "first_name", "last_name", "contact_codes", optOutFieldName}
+			} else {
+				fieldsList = []string{"email"}
+			}
+
+			optOutsContactsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+			optOutsLeadsEmailsCsv, _ := x.OnlyThisFields(fieldsList)
+
+			optOutsContactsEmailsCsv, _ = optOutsContactsEmailsCsv.OnlyThisRows(optOutsEmailsContactsIndex, true)
+			optOutsLeadsEmailsCsv, _ = optOutsLeadsEmailsCsv.OnlyThisRows(optOutsEmailsLeadsIndex, true)
+
+			if *deleteFormat == true {
+				optOutsContactsEmailsCsv, _ = optOutsContactsEmailsCsv.DeleteRow(0)
+				optOutsLeadsEmailsCsv, _ = optOutsLeadsEmailsCsv.DeleteRow(0)
+			}
+
+			wasWrittenContacts2 := optOutsContactsEmailsCsv.WriteCsvFile("eclean_OPT-OUT_EMAILS_CONTACTS.csv")
+			if wasWrittenContacts2 == true {
+				fmt.Println("Opt-out emails from contacts saved in the file: eclean_OPT-OUT_EMAILS_CONTACTS.csv")
+			} else {
+				fmt.Println("Could not create eclean_OPT-OUT_EMAILS_CONTACTS.csv")
+			}
+			wasWrittenLeads2 := optOutsLeadsEmailsCsv.WriteCsvFile("eclean_OPT-OUT_EMAILS_LEADS.csv")
+			if wasWrittenLeads2 == true {
+				fmt.Println("Opt-out emails from leads saved in the file: eclean_OPT-OUT_EMAILS_LEADS.csv")
+			} else {
+				fmt.Println("Could not create eclean_OPT-OUT_EMAILS_LEADS.csv")
+			}
+		}
+
 	}
 
 }
