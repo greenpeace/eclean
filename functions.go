@@ -75,7 +75,7 @@ func checkRecommendedFields(x simplecsv.SimpleCsv) {
 func invalidEmailAddresses(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	var fieldsList []string
 	if *deleteFormat == false {
-		fieldsList = []string{"Supporter ID", "email"}
+		fieldsList = x.GetHeaders()
 	} else {
 		fieldsList = []string{"email"}
 	}
@@ -112,7 +112,7 @@ func invalidEmailAddresses(x simplecsv.SimpleCsv, deleteFormat *bool) {
 func fakeNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	var fieldsList []string
 	if *deleteFormat == false {
-		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name"}
+		fieldsList = x.GetHeaders()
 	} else {
 		fieldsList = []string{"email"}
 	}
@@ -148,7 +148,7 @@ func fakeNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 func emptyNames(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	var fieldsList []string
 	if *deleteFormat == false {
-		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name"}
+		fieldsList = x.GetHeaders()
 	} else {
 		fieldsList = []string{"email"}
 	}
@@ -222,7 +222,7 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	var suppressedEmailIndexOK bool
 	var fieldsList []string
 	if *deleteFormat == false {
-		fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name"}
+		fieldsList = x.GetHeaders()
 	} else {
 		fieldsList = []string{"email"}
 	}
@@ -264,7 +264,7 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 			fmt.Println("Number of SF leads with suppressed emails:", len(suppressedEmailsLeadsIndex))
 
 			if *deleteFormat == false {
-				fieldsList = []string{"Supporter ID", "email", "Suppressed", "first_name", "last_name", "contact_codes"}
+				fieldsList = x.GetHeaders()
 			} else {
 				fieldsList = []string{"email"}
 			}
@@ -305,7 +305,7 @@ func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	// Defining the fields in the col
 	var fieldsList []string
 	if *deleteFormat == false {
-		fieldsList = []string{"Supporter ID", "email", "first_name", "last_name", optOutFieldName}
+		fieldsList = x.GetHeaders()
 	} else {
 		fieldsList = []string{"email"}
 	}
@@ -351,7 +351,7 @@ func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 			fmt.Println("Number of SF leads with opt-out emails:", len(optOutsEmailsLeadsIndex))
 
 			if *deleteFormat == false {
-				fieldsList = []string{"Supporter ID", "email", "first_name", "last_name", "contact_codes", optOutFieldName}
+				fieldsList = x.GetHeaders()
 			} else {
 				fieldsList = []string{"email"}
 			}
