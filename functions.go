@@ -292,7 +292,6 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 }
 
 // Creates a csv with the opt-out emails
-
 func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	fmt.Println("Analising opt-out emails")
 	var optOutsEmailIndex []int
@@ -308,7 +307,7 @@ func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	// It the opt out field exists
 	if x.GetHeaderPosition(optOutFieldName) != -1 {
 		fmt.Println("Opt-out field found, it's", optOutFieldName)
-		optOutsEmailIndex, optOutsEmailIndexOK = x.FindInField(optOutFieldName, "Y")
+		optOutsEmailIndex, optOutsEmailIndexOK = x.FindInField(optOutFieldName, "N")
 
 		if optOutsEmailIndexOK == true {
 			fmt.Println("Number of records with opt-outs emails:", len(optOutsEmailIndex))
