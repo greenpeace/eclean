@@ -57,7 +57,7 @@ In Windows:
 
 `-suppressed` - Creates a csv file with all the suppressed email addresses. This should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_SUPPRESSED_EMAILS.csv`. IMPORTANT: If the `contact_codes` field exists in the exported csv, a second and third files `eclean_SUPPRESSED_EMAILS_CONTACTS.csv` and `eclean_SUPPRESSED_EMAILS_LEADS.csv` are also created.
 
-`-optout`- Creates a CSV file with all the opt-out email addresses. Just like the supressed emails this should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_OPT-OUT_EMAILS.csv`
+`-optout`- Creates a CSV file with all the opt-out email addresses. Just like the supressed emails this should be inspected and can be deleted if there's not the risk of being added again to EN (by the CRM). Saved in `eclean_OPT-OUT_EMAILS.csv`. If the `contact_codes` field exists in the exported csv, a second and third files `eclean_OPT-OUT_EMAILS_CONTACTS.csv` and `eclean_SUPPRESSED_OPT-OUT_LEADS.csv` are also created.
 
 ### Options you can add
 
