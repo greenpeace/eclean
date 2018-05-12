@@ -189,6 +189,9 @@ func trashFiles() {
 	os.Remove("eclean_SUPPRESSED_EMAILS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_CONTACTS.csv")
 	os.Remove("eclean_SUPPRESSED_EMAILS_LEADS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS_CONTACTS.csv")
+	os.Remove("eclean_OPT-OUT_EMAILS_LEADS.csv")
 }
 
 // nowDateTimeString Returns the date as a string in a specific format
@@ -207,6 +210,9 @@ func stashFiles() {
 	os.Rename("eclean_SUPPRESSED_EMAILS_CONTACTS.csv", "eclean_SUPPRESSED_EMAILS_CONTACTS-"+now+".csv")
 	os.Rename("eclean_SUPPRESSED_EMAILS_LEADS.csv", "eclean_SUPPRESSED_EMAILS_LEADS-"+now+".csv")
 	os.Rename("eclean_OPT-OUT_EMAILS.csv", "eclean_OPT-OUT_EMAILS-"+now+".csv")
+	os.Rename("eclean_OPT-OUT_EMAILS_CONTACTS.csv", "eclean_OPT-OUT_EMAILS_CONTACTS-"+now+".csv")
+	os.Rename("eclean_OPT-OUT_EMAILS_LEADS.csv", "eclean_OPT-OUT_EMAILS_LEADS-"+now+".csv")
+
 	os.Exit(0)
 }
 
