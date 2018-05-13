@@ -17,7 +17,7 @@ const contactFieldName = "contact_codes"
 const contactRegularExp = `(\w+|\s)`
 
 // const contactFieldName = "tipo"
-// const contactRegularExp = `(2|3|4|5)`
+// const contactRegularExp = `(0|2|3|4|5)`
 
 func main() {
 
