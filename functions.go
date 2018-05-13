@@ -64,10 +64,10 @@ func checkRecommendedFields(x simplecsv.SimpleCsv) {
 	} else {
 		fmt.Println("OK - Opt-out field found, it's the", optOutFieldName, "field")
 	}
-	if x.GetHeaderPosition("contact_codes") == -1 {
-		fmt.Println("ERR - There's not a contact_codes field in the CSV")
+	if x.GetHeaderPosition(contactFieldName) == -1 {
+		fmt.Println("ERR - There's not a", contactFieldName, "field in the CSV")
 	} else {
-		fmt.Println("OK - contact_codes field found")
+		fmt.Println("OK -", contactFieldName, "field found")
 	}
 }
 
@@ -249,11 +249,11 @@ func suppresedEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 		fmt.Println("There's not a Suppressed field in the csv")
 	}
 
-	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition("contact_codes") != -1 {
-		fmt.Println("contact_codes field found")
+	if x.GetHeaderPosition("Suppressed") != -1 && x.GetHeaderPosition(contactFieldName) != -1 {
+		fmt.Println(contactFieldName, "field found")
 
 		lastRecord := x.GetNumberRows() - 1
-		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		contactsIndex, contactsIndexOK := x.MatchInField(contactFieldName, contactRegularExp)
 		leadsIndex := simplecsv.NotIndex(contactsIndex, 1, lastRecord)
 
 		if contactsIndexOK == true && suppressedEmailIndexOK == true {
@@ -336,11 +336,11 @@ func optOutEmails(x simplecsv.SimpleCsv, deleteFormat *bool) {
 	}
 
 	// It the opt out and contact_codes fields exist
-	if x.GetHeaderPosition(optOutFieldName) != -1 && x.GetHeaderPosition("contact_codes") != -1 {
-		fmt.Println("contact_codes field found")
+	if x.GetHeaderPosition(optOutFieldName) != -1 && x.GetHeaderPosition(contactFieldName) != -1 {
+		fmt.Println(contactFieldName, "field found")
 
 		lastRecord := x.GetNumberRows() - 1
-		contactsIndex, contactsIndexOK := x.MatchInField("contact_codes", `(\w+|\s)`)
+		contactsIndex, contactsIndexOK := x.MatchInField(contactFieldName, contactRegularExp)
 		leadsIndex := simplecsv.NotIndex(contactsIndex, 1, lastRecord)
 
 		if contactsIndexOK == true && optOutsEmailIndexOK == true {

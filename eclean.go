@@ -9,6 +9,13 @@ const emailRegex string = `([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]
 
 const optOutFieldName = "real_email_ok"
 
+// Use this to configure the field that separates contacts from leads. Normally contact_codes, but you may want to work with another field
+const contactFieldName = "contact_codes"
+const contactRegularExp = `(\w+|\s)`
+
+// const contactFieldName = "tipo"
+// const contactRegularExp = `(2|3|4|5)`
+
 func main() {
 
 	help := flag.Bool("help", false, "Display help")
