@@ -7,7 +7,10 @@ import (
 
 const emailRegex string = `([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)`
 
+// Use this to configure the opt-out email field. For most it will be email_ok, but we use real_email_ok.
 const optOutFieldName = "real_email_ok"
+
+// const optOutFieldName = "email_ok"
 
 // Use this to configure the field that separates contacts from leads. Normally contact_codes, but you may want to work with another field
 const contactFieldName = "contact_codes"
